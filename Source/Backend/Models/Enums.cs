@@ -12,7 +12,5 @@ namespace Backend.Models
         Vilt,
         Wok,
         Köttfärs,
-        
-
     }
 }
