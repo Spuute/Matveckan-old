@@ -21,5 +21,10 @@ namespace Backend.Controllers
         public IActionResult Recipe(){
             throw new NotImplementedException();
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Recipes(int id){
+            throw new NotImplementedException();
+        }
     }
 }
