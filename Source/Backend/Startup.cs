@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Backend.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend
 {
@@ -28,6 +30,10 @@ namespace Backend
         {
 
             services.AddControllers();
+            services.AddDbContext<FoodWeekContext>(option =>
+                    option.UseSqlServer(
+                        @"Server=localhost,41433;Database=FoodWeek;User ID=sa; Password=verystrong!pass321"));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend", Version = "v1" });
