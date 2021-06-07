@@ -1,5 +1,8 @@
 using System;
+using Backend.Models;
+using Backend.Models.Data;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Backend.Controllers
 {
@@ -14,20 +17,20 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult Recipes(){
+        public IActionResult GetRecipes(){
             throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
-        public IActionResult Recipe(int id){
+        public IActionResult GetRecipe(int id){
             throw new NotImplementedException();
         }
 
         [HttpPost]
-        public IActionResult Recipe([FromBody] Recipes recipe){
+        public IActionResult AddRecipe([FromBody] Recipe recipe){
             try {
-            _dbContext.Recipe.Add(recipe);
-            return Ok("Recept tillagt i databasen.")
+            _dbContext.Recipes.Add(recipe);
+            return Ok("Recept tillagt i databasen.");
             }
             catch {
                 return Conflict();
@@ -35,7 +38,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Recipes(int id){
+        public IActionResult DeleteRecipe(int id){
             throw new NotImplementedException();
         }
     }
