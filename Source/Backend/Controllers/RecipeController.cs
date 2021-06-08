@@ -2,6 +2,7 @@ using System;
 using Backend.Models;
 using Backend.Models.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 
 namespace Backend.Controllers
@@ -18,7 +19,8 @@ namespace Backend.Controllers
 
         [HttpGet]
         public IActionResult GetRecipes(){
-            throw new NotImplementedException();
+            var allRecipes = _dbContext.Recipes.Select(x => x.Name).ToList();
+            return Ok(allRecipes);
         }
 
         [HttpGet("{id}")]
