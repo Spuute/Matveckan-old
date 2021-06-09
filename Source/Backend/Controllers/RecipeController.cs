@@ -19,7 +19,7 @@ namespace Backend.Controllers
 
         [HttpGet]
         public IActionResult GetRecipes(){
-            var allRecipes = _dbContext.Recipes.Select(x => x.Name).FirstOrDefault();
+            var allRecipes = _dbContext.Recipes.Select(x => x.Name).ToList();
             return Ok(allRecipes);
         }
 
@@ -42,7 +42,8 @@ namespace Backend.Controllers
 
         [HttpDelete("{id}")]
         public IActionResult DeleteRecipe(int id){
-            _dbContext.Remove(id);
+            var recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
+            _dbContext.Remove(recipe);
             _dbContext.SaveChanges();
             return Ok("Recept borttaget");
         }

@@ -9,5 +9,6 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 ENV ASPNETCORE_URLS=http://+:3001
 ENV ASPNETCORE_ENVIRONMENT Development
+ENTRYPOINT [ "dotnet", "Backend.dll" ]
 #EXPOSE 3000
-ENTRYPOINT ["dotnet", "Backend.dll"]
+#ENTRYPOINT ["dotnet", "watch", "run", "--no-restore", "Backend.dll"]
