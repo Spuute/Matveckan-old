@@ -5,7 +5,10 @@ namespace Backend.Models.Data
 {
     public class FoodWeekContext : DbContext
     {
-        public virtual DbSet<Recipe> Recipes { get; set;}
+        public virtual DbSet<Recipe> Recipes { get; set; }
+        //public virtual DbSet<Ingredient> Ingredients { get; set; }
+
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         public FoodWeekContext(DbContextOptions<FoodWeekContext> options) : base(options)
         {

@@ -9,6 +9,6 @@ namespace Backend.Models
         public string Name { get; set; }
         public Category Category { get; set; }
         public List<string> Instructions { get; set; }
-        public ICollection Ingredient { get; set; }
+        public ICollection<Ingredient> Ingredient { get; set; }
     }
 }
