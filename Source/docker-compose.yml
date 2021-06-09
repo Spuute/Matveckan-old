@@ -6,12 +6,14 @@ services:
       - 3000:3000
   backend:
     build: ./Backend
+    environment: 
+      DBServer: "ms-sql-server"
     ports:
       - 3001:3001
-  database:
+  ms-sql-server:
     image: mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-20.04
     ports:
-      - 41433:1433
+      - "1433:1433"
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "verystrong!pass321"

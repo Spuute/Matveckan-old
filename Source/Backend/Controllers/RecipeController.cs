@@ -19,7 +19,7 @@ namespace Backend.Controllers
 
         [HttpGet]
         public IActionResult GetRecipes(){
-            var allRecipes = _dbContext.Recipes.Select(x => x.Name).ToList();
+            var allRecipes = _dbContext.Recipes.Select(x => x.Name).FirstOrDefault();
             return Ok(allRecipes);
         }
 
@@ -29,9 +29,10 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecipe([FromBody] Recipe recipe){
+        public IActionResult AddRecipe([FromBody] Recipe recipe) {
             try {
             _dbContext.Recipes.Add(recipe);
+            _dbContext.SaveChanges();
             return Ok("Recept tillagt i databasen.");
             }
             catch {
@@ -41,7 +42,9 @@ namespace Backend.Controllers
 
         [HttpDelete("{id}")]
         public IActionResult DeleteRecipe(int id){
-            throw new NotImplementedException();
+            _dbContext.Remove(id);
+            _dbContext.SaveChanges();
+            return Ok("Recept borttaget");
         }
     }
 }

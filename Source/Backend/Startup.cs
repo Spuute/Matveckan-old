@@ -30,9 +30,18 @@ namespace Backend
         {
 
             services.AddControllers();
-            services.AddDbContext<FoodWeekContext>(option =>
-                    option.UseSqlServer(
-                        @"Server=localhost,41433;Database=FoodWeek;User ID=sa; Password=verystrong!pass321"));
+            //services.AddDbContext<FoodWeekContext>(option =>
+                    //option.UseSqlServer(
+                        //@"Server=database,41433;Database=FoodWeek;User ID=sa; Password=verystrong!pass321"));
+
+            var server = Configuration["DBServer"] ?? "localhost";
+            var port = Configuration["DBPort"] ?? "1433";
+            var user = Configuration["DBUser"] ?? "SA";
+            var password = Configuration["DBPassword"] ?? "verystrong!pass321";
+            var database = Configuration["Database"] ?? "FoodWeek";
+
+            services.AddDbContext<FoodWeekContext>(options =>
+                options.UseSqlServer($"Server={server},{port};Initial Catalog={database};USER ID={user};Password={password}"));     
 
             services.AddSwaggerGen(c =>
             {
@@ -50,7 +59,7 @@ namespace Backend
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
