@@ -11,6 +11,6 @@ namespace Backend.Models
         public string Name { get; set; }
         public double Weight { get; set; }
         public double Amount { get; set; }
-        public ICollection Recipe { get; set; }
+        public ICollection<IngredientRecipe> IngredientRecipes { get; set; }
     }
 }

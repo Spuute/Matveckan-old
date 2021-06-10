@@ -4,14 +4,16 @@ using Backend.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Backend.Migrations
 {
     [DbContext(typeof(FoodWeekContext))]
-    partial class FoodWeekContextModelSnapshot : ModelSnapshot
+    [Migration("20210610081906_Tables_Ingredient_And_IngredientRecipe")]
+    partial class Tables_Ingredient_And_IngredientRecipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
