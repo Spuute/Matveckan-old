@@ -25,7 +25,27 @@ namespace Backend.Controllers
 
         [HttpGet("{id}")]
         public IActionResult GetRecipe(int id){
-            throw new NotImplementedException();
+           var dish = _dbContext.Recipes
+                    .Join(_dbContext.RecipeIngredients,
+                    r => r.Id,
+                    ir => ((byte)ir.RecipeId),
+                    (r, ir) => new {
+                        r.Name,
+                        r.Category,
+                        i = ir.Ingredient.Name,
+                        ir.Ingredient.Amount,
+                        ir.Ingredient.Weight
+                    })
+                    .Select(r => new {
+                        Dish = r.Name,
+                        Ingredients = new {
+                            Ingredient = r.i,
+                            Amount = r.Amount,
+                            Weight = r.Weight
+                        }
+                    }).ToList();
+
+            return Ok(dish);
         }
 
         [HttpPost]
