@@ -45,7 +45,9 @@ namespace Backend.Controllers
                         }
                     }).ToList();
 
-            return Ok(dish);
+
+
+            return Ok(dish1);
         }
 
         [HttpPost]
