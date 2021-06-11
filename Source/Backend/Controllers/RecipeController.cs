@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Backend.Controllers
 {
     [ApiController]
