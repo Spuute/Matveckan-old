@@ -26,25 +26,28 @@ namespace Backend.Controllers
 
         [HttpGet("{id}")]
         public IActionResult GetRecipe(int id){
-           var dish = _dbContext.Recipes
-                    .Join(_dbContext.RecipeIngredients,
-                    r => r.Id,
-                    ir => ((byte)ir.RecipeId),
-                    (r, ir) => new {
-                        r.Name,
-                        r.Category,
-                        i = ir.Ingredient.Name,
-                        ir.Ingredient.Amount,
-                        ir.Ingredient.Weight
-                    })
-                    .Select(r => new {
-                        Dish = r.Name,
-                        Ingredients = new {
-                            Ingredient = r.i,
-                            Amount = r.Amount,
-                            Weight = r.Weight
-                        }
-                    }).ToList();
+            //FIXME: Clean up the mess in this method. 
+            //TODO: Refactoring.
+            
+        //    var dish = _dbContext.Recipes
+        //             .Join(_dbContext.RecipeIngredients,
+        //             r => r.Id,
+        //             ir => ((byte)ir.RecipeId),
+        //             (r, ir) => new {
+        //                 r.Name,
+        //                 r.Category,
+        //                 i = ir.Ingredient.Name,
+        //                 ir.Ingredient.Amount,
+        //                 ir.Ingredient.Weight
+        //             })
+        //             .Select(r => new {
+        //                 Dish = r.Name,
+        //                 Ingredients = new {
+        //                     Ingredient = r.i,
+        //                     Amount = r.Amount,
+        //                     Weight = r.Weight
+        //                 }
+        //             }).ToList();
 
                     var dish1 = _dbContext.Recipes
                                 .Where(x => x.Id == id)
