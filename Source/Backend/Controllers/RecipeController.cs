@@ -28,7 +28,7 @@ namespace Backend.Controllers
         public IActionResult GetRecipe(int id){
             //FIXME: Clean up the mess in this method. 
             //TODO: Refactoring.
-            
+
         //    var dish = _dbContext.Recipes
         //             .Join(_dbContext.RecipeIngredients,
         //             r => r.Id,
@@ -49,16 +49,14 @@ namespace Backend.Controllers
         //                 }
         //             }).ToList();
 
-                    var dish1 = _dbContext.Recipes
-                                .Where(x => x.Id == id)
-                                .Include(e => e.IngredientRecipes)
-                                .ThenInclude(e => e.Ingredient)
-                                .Select(x => new {
-                                    dish = x.Name,
-                                    ingredients = x.IngredientRecipes
-                                });
-
-
+            var dish1 = _dbContext.Recipes
+                        .Where(x => x.Id == id)
+                        .Include(e => e.IngredientRecipes)
+                        .ThenInclude(e => e.Ingredient)
+                        .Select(x => new {
+                            dish = x.Name,
+                            ingredients = x.IngredientRecipes
+                        });
 
             return Ok(dish1);
         }
