@@ -43,6 +43,9 @@ namespace Backend
             services.AddDbContext<FoodWeekContext>(options =>
                 options.UseSqlServer($"Server={server},{port};Initial Catalog={database};USER ID={user};Password={password}"));     
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend", Version = "v1" });

@@ -10,6 +10,7 @@ namespace Backend.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public double? Weight { get; set; }
+        //TODO: Kolla om detta bör bli något annat
         public string? Amount { get; set; }
         public ICollection<IngredientRecipe> IngredientRecipes { get; set; }
     }

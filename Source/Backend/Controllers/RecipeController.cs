@@ -3,6 +3,7 @@ using Backend.Models;
 using Backend.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Backend.Controllers
@@ -44,6 +45,15 @@ namespace Backend.Controllers
                             Weight = r.Weight
                         }
                     }).ToList();
+
+                    var dish1 = _dbContext.Recipes
+                                .Where(x => x.Id == id)
+                                .Include(e => e.IngredientRecipes)
+                                .ThenInclude(e => e.Ingredient)
+                                .Select(x => new {
+                                    dish = x.Name,
+                                    ingredients = x.IngredientRecipes
+                                });
 
 
 
