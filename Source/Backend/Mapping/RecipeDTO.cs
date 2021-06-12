@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Backend.Models;
 
 namespace Backend.Mapping
@@ -6,6 +7,6 @@ namespace Backend.Mapping
     {
         public string Name { get; set; } 
         public Category Categories { get; set; }
-        
+        public List<IngredientResource> Ingredients { get; set; }
     }
 }

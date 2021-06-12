@@ -8,7 +8,7 @@ namespace Backend.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string IngredientName { get; set; }
         public double? Weight { get; set; }
         //TODO: Kolla om detta bör bli något annat
         public string? Amount { get; set; }
