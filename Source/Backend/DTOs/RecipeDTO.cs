@@ -9,7 +9,7 @@ namespace Backend.Resources
     {
         public string Name { get; set; } 
         public Category Categories { get; set; }
-        public List<IngredientResource> Ingredients { get; set; } = new List<IngredientResource>();
+        public List<IngredientDTO> Ingredients { get; set; } = new List<IngredientDTO>();
     }
 
     // public class RecipeDTOto  : Profile

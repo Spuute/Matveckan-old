@@ -1,9 +1,9 @@
 namespace Backend.Resources
 {
-    public class IngredientResource
+    public class IngredientDTO
     {
         public string IngredientName { get; set; }
-        public string? Amount { get; set; }
+        public string Amount { get; set; }
         
     }
 }

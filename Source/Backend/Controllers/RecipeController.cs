@@ -6,7 +6,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Resources;
-using Backend.Mapping;
 using System.Collections.Generic;
 
 namespace Backend.Controllers
@@ -16,11 +15,9 @@ namespace Backend.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly FoodWeekContext _dbContext;
-        private readonly IMapper _mapper;
 
-        public RecipeController(FoodWeekContext dbContext, IMapper mapper) {
+        public RecipeController(FoodWeekContext dbContext) {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         [HttpGet]
@@ -31,7 +28,7 @@ namespace Backend.Controllers
 
         [HttpGet("{id}")]
         public IActionResult GetRecipe(int id) { 
-            var ingredientList = _dbContext.Ingredients.Select(x => new IngredientResource() {
+            var ingredientList = _dbContext.Ingredients.Select(x => new IngredientDTO() {
                 IngredientName = x.IngredientName,
                 Amount = x.Amount
             }).ToList();

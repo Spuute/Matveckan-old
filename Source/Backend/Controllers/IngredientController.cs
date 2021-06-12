@@ -14,11 +14,9 @@ namespace Backend.Controllers
     public class IngredientController : ControllerBase
     {
         private readonly FoodWeekContext _dbContext;
-        private readonly IMapper _mapper;
 
-        public IngredientController(FoodWeekContext dbContext, IMapper mapper) {
+        public IngredientController(FoodWeekContext dbContext) {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         [HttpPost]
@@ -53,15 +51,6 @@ namespace Backend.Controllers
 
         [HttpDelete]
         public IActionResult Ingredient(int id, string inputIngredient) {
-            Recipe recipe;
-
-            // recipe = _dbContext.Recipes
-            //         .Where(x => x.Id == id)
-            //         .Include(ir => ir.IngredientRecipes)
-            //         .ThenInclude(i => i.Ingredient)
-            //         .Select(x => new {
-
-            //         })
             var ingredient = _dbContext.Ingredients.Where(x => x.IngredientName == inputIngredient).FirstOrDefault();
 
             if(ingredient != null) {
