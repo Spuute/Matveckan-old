@@ -21,7 +21,8 @@ namespace Backend.Models.Data
             modelBuilder.Entity<IngredientRecipe>()
                 .HasOne(ir => ir.Recipe)
                 .WithMany(r => r.IngredientRecipes)
-                .HasForeignKey(ir => ir.RecipeId);
+                .HasForeignKey(ir => ir.RecipeId)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<IngredientRecipe>()
                 .HasOne(ir => ir.Ingredient)
                 .WithMany(i => i.IngredientRecipes)

@@ -4,14 +4,16 @@ using Backend.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Backend.Migrations
 {
     [DbContext(typeof(FoodWeekContext))]
-    partial class FoodWeekContextModelSnapshot : ModelSnapshot
+    [Migration("20210612143955_CascadeDelete_On_Recipe_Table")]
+    partial class CascadeDelete_On_Recipe_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

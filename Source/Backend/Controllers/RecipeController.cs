@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Resources;
 using Backend.Mapping;
+using System.Collections.Generic;
 
 namespace Backend.Controllers
 {
@@ -29,50 +30,31 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetRecipe(int id){
-            //FIXME: Clean up the mess in this method. 
-            //TODO: Refactoring.
+        public IActionResult GetRecipe(int id) { 
+            var ingredientList = _dbContext.Ingredients.Select(x => new IngredientResource() {
+                IngredientName = x.IngredientName,
+                Amount = x.Amount
+            }).ToList();
 
-        //    var dish = _dbContext.Recipes
-        //             .Join(_dbContext.RecipeIngredients,
-        //             r => r.Id,
-        //             ir => ((byte)ir.RecipeId),
-        //             (r, ir) => new {
-        //                 r.Name,
-        //                 r.Category,
-        //                 i = ir.Ingredient.Name,
-        //                 ir.Ingredient.Amount,
-        //                 ir.Ingredient.Weight
-        //             })
-        //             .Select(r => new {
-        //                 Dish = r.Name,
-        //                 Ingredients = new {
-        //                     Ingredient = r.i,
-        //                     Amount = r.Amount,
-        //                     Weight = r.Weight
-        //                 }
-        //             }).ToList();
-
-            var dish1 = _dbContext.Recipes
-                        .Where(x => x.Id == id)
-                        .Include(e => e.IngredientRecipes)
-                        .Include(e => e.Ingredient)
+            var dish1 = _dbContext.RecipeIngredients
+                        .Include(x => x.Recipe)
+                        .Include(x => x.Ingredient)
+                        .Where(x => x.Recipe.Id == id)
                         .Select(x => new RecipeDTO() {
-                            Name = x.Name,
-                            Categories = x.Category,
-                            Ingredients = x.
+                            Name = x.Recipe.Name,
+                            Categories = x.Recipe.Category,
+                            Ingredients = ingredientList
                         });
-            // var resource = _mapper.Map<Recipe, Re>(dish1);
-            
+
             return Ok(dish1);
         }
 
         [HttpPost]
         public IActionResult AddRecipe([FromBody] Recipe recipe) {
             try {
-            _dbContext.Recipes.Add(recipe);
-            _dbContext.SaveChanges();
-            return Ok("Recept tillagt i databasen.");
+                _dbContext.Recipes.Add(recipe);
+                _dbContext.SaveChanges();
+                return Ok("Recept tillagt i databasen.");
             }
             catch {
                 return Conflict();
@@ -80,7 +62,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteRecipe(int id){
+        public IActionResult DeleteRecipe(int id) {
             var recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
             _dbContext.Remove(recipe);
             _dbContext.SaveChanges();
