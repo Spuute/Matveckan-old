@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Resources;
+using Backend.Mapping;
 
 namespace Backend.Controllers
 {
@@ -55,12 +56,13 @@ namespace Backend.Controllers
             var dish1 = _dbContext.Recipes
                         .Where(x => x.Id == id)
                         .Include(e => e.IngredientRecipes)
-                        .ThenInclude(e => e.Ingredient)
-                        .Select(x => new {
-                            dish = x.Name,
-                            ingredients = x.IngredientRecipes
+                        .Include(e => e.Ingredient)
+                        .Select(x => new RecipeDTO() {
+                            Name = x.Name,
+                            Categories = x.Category,
+                            Ingredients = x.
                         });
-            // var resource = _mapper.Map<Recipe, RecipeResource>(dish1);
+            // var resource = _mapper.Map<Recipe, Re>(dish1);
             
             return Ok(dish1);
         }
