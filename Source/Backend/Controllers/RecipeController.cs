@@ -4,6 +4,8 @@ using Backend.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Backend.Resources;
 
 namespace Backend.Controllers
 {
@@ -12,9 +14,11 @@ namespace Backend.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly FoodWeekContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public RecipeController(FoodWeekContext dbContext) {
+        public RecipeController(FoodWeekContext dbContext, IMapper mapper) {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -56,7 +60,8 @@ namespace Backend.Controllers
                             dish = x.Name,
                             ingredients = x.IngredientRecipes
                         });
-
+            // var resource = _mapper.Map<Recipe, RecipeResource>(dish1);
+            
             return Ok(dish1);
         }
 

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Backend.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace Backend
 {
@@ -30,9 +31,6 @@ namespace Backend
         {
 
             services.AddControllers();
-            //services.AddDbContext<FoodWeekContext>(option =>
-                    //option.UseSqlServer(
-                        //@"Server=database,41433;Database=FoodWeek;User ID=sa; Password=verystrong!pass321"));
 
             var server = Configuration["DBServer"] ?? "localhost";
             var port = Configuration["DBPort"] ?? "1433";
@@ -50,6 +48,8 @@ namespace Backend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
