@@ -25,7 +25,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Ingredient(int id) {
+        public IActionResult AddIngredientToRecipe(int id) {
 
             Recipe recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
 
@@ -44,7 +44,6 @@ namespace Backend.Controllers
 
             _dbContext.RecipeIngredients.Add(thisIngredient);
             _dbContext.SaveChanges();
-
 
             return Ok("Ingrediens tillagd till receptet");
         }
