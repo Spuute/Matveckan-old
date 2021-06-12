@@ -28,9 +28,13 @@ namespace Backend.Controllers
 
         [HttpGet("{id}")]
         public IActionResult GetRecipe(int id) { 
-            var ingredientList = _dbContext.Ingredients.Select(x => new IngredientDTO() {
-                IngredientName = x.IngredientName,
-                Amount = x.Amount
+            var ingredientList = _dbContext.RecipeIngredients
+            .Include(x => x.Ingredient)
+            .Include(x => x.Recipe)
+            .Where(x => x.RecipeId == id)
+            .Select(x => new IngredientDTO() {
+                IngredientName = x.Ingredient.IngredientName,
+                Amount = x.Ingredient.Amount
             }).ToList();
 
             var dish1 = _dbContext.RecipeIngredients
@@ -41,7 +45,7 @@ namespace Backend.Controllers
                             Name = x.Recipe.Name,
                             Categories = x.Recipe.Category,
                             Ingredients = ingredientList
-                        });
+                        }).FirstOrDefault();
 
             return Ok(dish1);
         }
