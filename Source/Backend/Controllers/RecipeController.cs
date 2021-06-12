@@ -21,13 +21,13 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRecipes(){
+        public IActionResult GetAllRecipes(){
             var allRecipes = _dbContext.Recipes.Select(x => x.Name).ToList();
             return Ok(allRecipes);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetRecipe(int id) { 
+        public IActionResult GetCompleteRecipe(int id) { 
             var ingredientList = _dbContext.RecipeIngredients
             .Include(x => x.Ingredient)
             .Include(x => x.Recipe)
