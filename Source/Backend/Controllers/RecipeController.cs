@@ -26,6 +26,11 @@ namespace Backend.Controllers
             return Ok(allRecipes);
         }
 
+        [HttpGet]
+        public IActionResult RandomizeRecipes() {
+            throw new NotImplementedException();
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetCompleteRecipe(int id) { 
             var ingredientList = _dbContext.RecipeIngredients

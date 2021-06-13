@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Resources;
 using Backend.RequestModels;
+using Backend.Interfaces;
 
 namespace Backend.Controllers
 {
@@ -28,7 +29,7 @@ namespace Backend.Controllers
         [HttpPut("{id}")]
         public IActionResult AddIngredientToRecipe(int id, [FromBody] AddIngredient addIngredient) {
 
-            Recipe recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
+            var recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
 
             Ingredient newIngredient = new Ingredient();
             newIngredient.IngredientName = addIngredient.IngredientName;
