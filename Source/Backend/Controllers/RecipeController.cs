@@ -37,7 +37,7 @@ namespace Backend.Controllers
                 Amount = x.Ingredient.Amount
             }).ToList();
 
-            var dish1 = _dbContext.RecipeIngredients
+            var recipe = _dbContext.RecipeIngredients
                         .Include(x => x.Recipe)
                         .Include(x => x.Ingredient)
                         .Where(x => x.Recipe.Id == id)
@@ -47,7 +47,7 @@ namespace Backend.Controllers
                             Ingredients = ingredientList
                         }).FirstOrDefault();
 
-            return Ok(dish1);
+            return Ok(recipe);
         }
 
         [HttpPost]

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Resources;
+using Backend.RequestModels;
 
 namespace Backend.Controllers
 {
@@ -25,13 +26,13 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AddIngredientToRecipe(int id) {
+        public IActionResult AddIngredientToRecipe(int id, [FromBody] AddIngredient addIngredient) {
 
             Recipe recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
 
             Ingredient newIngredient = new Ingredient();
-            newIngredient.IngredientName = "potatisgratäng";
-            newIngredient.Amount = "2 pkt";
+            newIngredient.IngredientName = addIngredient.IngredientName;
+            newIngredient.Amount = addIngredient.IngredientAmount;
             _dbContext.Ingredients.Add(newIngredient);
             _dbContext.SaveChanges();
 
