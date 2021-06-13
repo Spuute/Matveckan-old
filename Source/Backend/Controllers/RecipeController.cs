@@ -30,7 +30,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult RandomizeRecipes() {
+        public async Task<IActionResult> RandomizeRecipes() {
             throw new NotImplementedException();
         }
 
@@ -40,10 +40,10 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecipe([FromBody] Recipe recipe) {
+        public async Task<IActionResult> AddRecipe([FromBody] Recipe recipe) {
             try {
-                _recipeRepository.Insert(recipe);
-                _recipeRepository.Save();
+                await _recipeRepository.Insert(recipe);
+                await _recipeRepository.Save();
                 return Ok($"{recipe.Name} tillagt i databasen.");
             }
             catch {
@@ -52,10 +52,9 @@ namespace Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteRecipe(int id) {
-            _recipeRepository.Delete(id);
-            _recipeRepository.Save();
-
+        public async Task<IActionResult> DeleteRecipe(int id) {
+            await _recipeRepository.Delete(id);
+            await _recipeRepository.Save();
             return Ok("Recept borttaget");
         }
     }
