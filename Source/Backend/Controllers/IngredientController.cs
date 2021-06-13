@@ -8,6 +8,7 @@ using AutoMapper;
 using Backend.Resources;
 using Backend.RequestModels;
 using Backend.Interfaces;
+using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
@@ -22,12 +23,12 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult Ingredients() {
+        public async Task<IActionResult> Ingredients() {
             throw new NotImplementedException();
         }
 
         [HttpPut("{id}")]
-        public IActionResult AddIngredientToRecipe(int id, [FromBody] AddIngredient addIngredient) {
+        public async Task<IActionResult> AddIngredientToRecipe(int id, [FromBody] AddIngredient addIngredient) {
 
             var recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
 
@@ -51,7 +52,7 @@ namespace Backend.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Ingredient(int id, string inputIngredient) {
+        public async Task<IActionResult> Ingredient(int id, string inputIngredient) {
             var ingredient = _dbContext.Ingredients.Where(x => x.IngredientName == inputIngredient).FirstOrDefault();
 
             if(ingredient != null) {

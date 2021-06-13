@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Resources;
 using System.Collections.Generic;
+using Backend.Services.Repositories;
+using System.Threading.Tasks;
 
 namespace Backend.Controllers
 {
@@ -15,15 +17,16 @@ namespace Backend.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly FoodWeekContext _dbContext;
+        private readonly IRepository<Recipe, int> _recipeRepository;
 
-        public RecipeController(FoodWeekContext dbContext) {
+        public RecipeController(FoodWeekContext dbContext, IRepository<Recipe, int> recipeRepository) {
             _dbContext = dbContext;
+            _recipeRepository = recipeRepository;
         }
 
         [HttpGet]
-        public IActionResult GetAllRecipes(){
-            var allRecipes = _dbContext.Recipes.Select(x => x.Name).ToList();
-            return Ok(allRecipes);
+        public async Task<IActionResult> GetAllRecipes(){
+            return Ok(await _recipeRepository.GetAll());
         }
 
         [HttpGet]
@@ -32,35 +35,16 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCompleteRecipe(int id) { 
-            var ingredientList = _dbContext.RecipeIngredients
-            .Include(x => x.Ingredient)
-            .Include(x => x.Recipe)
-            .Where(x => x.RecipeId == id)
-            .Select(x => new IngredientDTO() {
-                IngredientName = x.Ingredient.IngredientName,
-                Amount = x.Ingredient.Amount
-            }).ToList();
-
-            var recipe = _dbContext.RecipeIngredients
-                        .Include(x => x.Recipe)
-                        .Include(x => x.Ingredient)
-                        .Where(x => x.Recipe.Id == id)
-                        .Select(x => new RecipeDTO() {
-                            Name = x.Recipe.Name,
-                            Categories = x.Recipe.Category,
-                            Ingredients = ingredientList
-                        }).FirstOrDefault();
-
-            return Ok(recipe);
+        public async Task<IActionResult> GetRecipeById(int id) { 
+            return Ok(await _recipeRepository.GetRecipeWithIngredients(id));
         }
 
         [HttpPost]
         public IActionResult AddRecipe([FromBody] Recipe recipe) {
             try {
-                _dbContext.Recipes.Add(recipe);
-                _dbContext.SaveChanges();
-                return Ok("Recept tillagt i databasen.");
+                _recipeRepository.Insert(recipe);
+                _recipeRepository.Save();
+                return Ok($"{recipe.Name} tillagt i databasen.");
             }
             catch {
                 return Conflict();
@@ -69,9 +53,9 @@ namespace Backend.Controllers
 
         [HttpDelete("{id}")]
         public IActionResult DeleteRecipe(int id) {
-            var recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
-            _dbContext.Remove(recipe);
-            _dbContext.SaveChanges();
+            _recipeRepository.Delete(id);
+            _recipeRepository.Save();
+
             return Ok("Recept borttaget");
         }
     }

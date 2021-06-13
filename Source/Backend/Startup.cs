@@ -14,6 +14,8 @@ using Microsoft.OpenApi.Models;
 using Backend.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Backend.Services.Repositories;
+using Backend.Models;
 
 namespace Backend
 {
@@ -39,7 +41,10 @@ namespace Backend
             var database = Configuration["Database"] ?? "FoodWeek";
 
             services.AddDbContext<FoodWeekContext>(options =>
-                options.UseSqlServer($"Server={server},{port};Initial Catalog={database};USER ID={user};Password={password}"));     
+                options.UseSqlServer($"Server={server},{port};Initial Catalog={database};USER ID={user};Password={password}"));  
+
+            services.AddScoped<IRepository<Recipe, int>, RecipeRepository>();
+            services.AddScoped<IRecipeRepository, RecipeRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

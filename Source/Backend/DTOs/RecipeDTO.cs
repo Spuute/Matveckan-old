@@ -9,10 +9,10 @@ namespace Backend.Resources
     {
         public string Name { get; set; } 
         public Category Categories { get; set; }
-        public List<IngredientDTO> Ingredients { get; set; } = new List<IngredientDTO>();
+        public IEnumerable<IngredientDTO> Ingredients { get; set; } 
     }
 
-    // public class RecipeDTOto  : Profile
+    // public class RecipeDTOto : Profile
     // {
     //     public RecipeDTOto() {
     //         CreateMap<Recipe, RecipeDTO>();
