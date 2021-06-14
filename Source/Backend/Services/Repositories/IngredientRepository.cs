@@ -7,7 +7,7 @@ using Backend.RequestModels;
 
 namespace Backend.Services.Repositories
 {
-    public class IngredientRepository : IIngredientRepository<Ingredient, int, string, AddIngredient>
+    public class IngredientRepository : IIngredientRepository
     {
         private readonly FoodWeekContext _dbContext;
 
@@ -28,29 +28,29 @@ namespace Backend.Services.Repositories
         //FIXME: Check if is is possible to make a return type and how to implement it in the controller. 
         public async Task<Ingredient> Insert(AddIngredient entity)
         {
-            //FIXME: Refactor to separate methods.
-            // var recipe = await _dbContext.Recipes.FirstOrDefaultAsync(x => x.Id == id);
-
             Ingredient newIngredient = new Ingredient();
             newIngredient.IngredientName = entity.IngredientName;
             newIngredient.Amount = entity.IngredientAmount;
-            _dbContext.Ingredients.Add(newIngredient);
+             await _dbContext.Ingredients.AddAsync(newIngredient);
             return newIngredient;
-            // await Save();
         }
 
-        public async Task MapToRecipe(Ingredient entity, int id)
+        public async Task<IngredientRecipe> MapToRecipe(Ingredient entity, int id)
         {
             var ingredient = await _dbContext.Ingredients.FirstOrDefaultAsync(x => x.IngredientName == entity.IngredientName);
-            // var ingredientName = await _dbContext.Ingredients.FirstOrDefaultAsync(r => r.IngredientName == newIngredient.IngredientName);
             int ingredientId = ingredient.Id;
 
             IngredientRecipe thisIngredient = new IngredientRecipe();
             thisIngredient.IngredientId = ingredientId;
             thisIngredient.RecipeId = id;
 
-            _dbContext.RecipeIngredients.Add(thisIngredient);
-            await Save();
+            if(!_dbContext.RecipeIngredients.Contains(thisIngredient))
+            {
+                await _dbContext.RecipeIngredients.AddAsync(thisIngredient);
+                return thisIngredient;
+            }
+
+            return null;
         }
 
         public async Task<IngredientRecipe> Update(Ingredient entity, string name, int id)
@@ -62,10 +62,10 @@ namespace Backend.Services.Repositories
                    .Where(x => x.Ingredient.IngredientName == name)
                    .FirstOrDefaultAsync();
 
-                   ingredient.Ingredient.IngredientName = entity.IngredientName;
-                   ingredient.Ingredient.Amount = entity.Amount;
+            ingredient.Ingredient.IngredientName = entity.IngredientName;
+            ingredient.Ingredient.Amount = entity.Amount;
 
-                   return ingredient;
+            return ingredient;
         }
 
         public async Task Save()

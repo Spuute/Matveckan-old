@@ -1,14 +1,15 @@
 using System.Threading.Tasks;
 using Backend.Models;
+using Backend.RequestModels;
 
 namespace Backend.Services.Repositories
 {
-    public interface IIngredientRepository<T1, T2, T3, T4> where T1 : class where T4 : class
+    public interface IIngredientRepository
     {
-        Task<Ingredient> Insert(T4 entity);
-        Task MapToRecipe(T1 entity, T2 id);
-        Task<IngredientRecipe> Update(T1 entity, T3 name, T2 id);
-        Task Delete(T2 id, T3 name);
+        Task<Ingredient> Insert(AddIngredient entity);
+        Task<IngredientRecipe> MapToRecipe(Ingredient entity, int id);
+        Task<IngredientRecipe> Update(Ingredient entity, string name, int id);
+        Task Delete(int id, string name);
         Task Save();
     }
 }

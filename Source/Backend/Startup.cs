@@ -46,7 +46,7 @@ namespace Backend
 
             services.AddScoped<IRepository<Recipe, int>, RecipeRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
-            services.AddScoped<IIngredientRepository<Ingredient, int, string, AddIngredient>, IngredientRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
