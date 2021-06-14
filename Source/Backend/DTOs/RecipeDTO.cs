@@ -12,6 +12,7 @@ namespace Backend.Resources
         public IEnumerable<IngredientDTO> Ingredients { get; set; } 
     }
 
+    //FIXME: Learn more about DTOs and Mapping.
     // public class RecipeDTOto : Profile
     // {
     //     public RecipeDTOto() {

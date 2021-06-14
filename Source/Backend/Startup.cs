@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Services.Repositories;
 using Backend.Models;
+using Backend.RequestModels;
 
 namespace Backend
 {
@@ -45,6 +46,7 @@ namespace Backend
 
             services.AddScoped<IRepository<Recipe, int>, RecipeRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped<IIngredientRepository<Ingredient, int, string, AddIngredient>, IngredientRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

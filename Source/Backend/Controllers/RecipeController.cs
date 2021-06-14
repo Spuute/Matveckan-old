@@ -29,10 +29,11 @@ namespace Backend.Controllers
             return Ok(await _recipeRepository.GetAll());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> RandomizeRecipes() {
-            throw new NotImplementedException();
-        }
+        //TODO: Add endpoint to randomize recipes for one week.
+        // [HttpGet]
+        // public async Task<IActionResult> RandomizeRecipes() {
+        //     throw new NotImplementedException();
+        // }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRecipeById(int id) { 

@@ -7,7 +7,7 @@ using Backend.RequestModels;
 
 namespace Backend.Services.Repositories
 {
-    public class IngredientRepository : IIngredientRepository<Ingredient, int, string>
+    public class IngredientRepository : IIngredientRepository<Ingredient, int, string, AddIngredient>
     {
         private readonly FoodWeekContext _dbContext;
 
@@ -26,10 +26,10 @@ namespace Backend.Services.Repositories
         }
 
         //FIXME: Check if is is possible to make a return type and how to implement it in the controller. 
-        public async Task<Ingredient> Insert(AddIngredient entity, int id)
+        public async Task<Ingredient> Insert(AddIngredient entity)
         {
             //FIXME: Refactor to separate methods.
-            var recipe = await _dbContext.Recipes.FirstOrDefaultAsync(x => x.Id == id);
+            // var recipe = await _dbContext.Recipes.FirstOrDefaultAsync(x => x.Id == id);
 
             Ingredient newIngredient = new Ingredient();
             newIngredient.IngredientName = entity.IngredientName;
@@ -39,10 +39,11 @@ namespace Backend.Services.Repositories
             // await Save();
         }
 
-        public async Task MapToRecipe(AddIngredient entity, int id)
+        public async Task MapToRecipe(Ingredient entity, int id)
         {
-            var ingredientName = await _dbContext.Ingredients.FirstOrDefaultAsync(r => r.IngredientName == newIngredient.IngredientName);
-            int ingredientId = ingredientName.Id;
+            var ingredient = await _dbContext.Ingredients.FirstOrDefaultAsync(x => x.IngredientName == entity.IngredientName);
+            // var ingredientName = await _dbContext.Ingredients.FirstOrDefaultAsync(r => r.IngredientName == newIngredient.IngredientName);
+            int ingredientId = ingredient.Id;
 
             IngredientRecipe thisIngredient = new IngredientRecipe();
             thisIngredient.IngredientId = ingredientId;
