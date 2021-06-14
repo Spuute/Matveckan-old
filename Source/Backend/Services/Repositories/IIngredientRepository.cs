@@ -8,7 +8,7 @@ namespace Backend.Services.Repositories
     {
         Task<Ingredient> Insert(AddIngredient entity);
         Task<IngredientRecipe> MapToRecipe(Ingredient entity, int id);
-        Task<IngredientRecipe> Update(Ingredient entity, string name, int id);
+        Task<Ingredient> Update(AddIngredient entity, string name, int id);
         Task Delete(int id, string name);
         Task Save();
     }

@@ -40,29 +40,17 @@ namespace Backend.Controllers
         }
 
         //TODO: Add endpoint for updating ingredient if user misspell or some other error. 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> AddIngredientToRecipe(int id, [FromBody] AddIngredient addIngredient) {
-
-        //     var recipe = _dbContext.Recipes.FirstOrDefault(x => x.Id == id);
-
-        //     Ingredient newIngredient = new Ingredient();
-        //     newIngredient.IngredientName = addIngredient.IngredientName;
-        //     newIngredient.Amount = addIngredient.IngredientAmount;
-        //     _dbContext.Ingredients.Add(newIngredient);
-        //     _dbContext.SaveChanges();
-
-        //     var ingredientName = _dbContext.Ingredients.FirstOrDefault(r => r.IngredientName == newIngredient.IngredientName);
-        //     int ingredientId = ingredientName.Id;
-
-        //     IngredientRecipe thisIngredient = new IngredientRecipe();
-        //     thisIngredient.IngredientId = ingredientId;
-        //     thisIngredient.RecipeId = id;
-
-        //     _dbContext.RecipeIngredients.Add(thisIngredient);
-        //     _dbContext.SaveChanges();
-
-        //     return Ok("Ingrediens tillagd till receptet");
-        // }
+        [HttpPut("{id}/{ingredientName}")]
+        public async Task<IActionResult> UpdateIngredient(int id, string ingredientName, [FromBody] AddIngredient addIngredient) {
+            var ingredient = await _igredientRepository.Update(addIngredient, ingredientName, id);
+            
+            if (ingredient != null)
+            {
+                await _igredientRepository.Save();
+                return Ok("Ingrediens uppdaterad");
+            }
+            return BadRequest("Detta recept har ingen ingrediens med det namnet");
+        }
 
         [HttpDelete]
         public async Task<IActionResult> Ingredient(int id, string inputIngredient)
@@ -72,7 +60,7 @@ namespace Backend.Controllers
             if (ingredient != null)
             {
                 _dbContext.Ingredients.Remove(ingredient);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok("Ingrediensen är borttagen.");
             }
             return BadRequest("Det finns ingen ingrediense med det namnet till detta recept");

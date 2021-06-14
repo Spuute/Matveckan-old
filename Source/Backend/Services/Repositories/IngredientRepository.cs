@@ -4,6 +4,7 @@ using Backend.Models.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Backend.RequestModels;
+using System.Collections.Generic;
 
 namespace Backend.Services.Repositories
 {
@@ -53,19 +54,25 @@ namespace Backend.Services.Repositories
             return null;
         }
 
-        public async Task<IngredientRecipe> Update(Ingredient entity, string name, int id)
+        public async Task<Ingredient> Update(AddIngredient entity, string name, int id)
         {
-            var ingredient = await _dbContext.RecipeIngredients
+            var getIngredient = await _dbContext.RecipeIngredients
                    .Include(x => x.Ingredient)
                    .Include(x => x.Recipe)
                    .Where(r => r.RecipeId == id)
                    .Where(x => x.Ingredient.IngredientName == name)
                    .FirstOrDefaultAsync();
 
-            ingredient.Ingredient.IngredientName = entity.IngredientName;
-            ingredient.Ingredient.Amount = entity.Amount;
+            var ingredient = await _dbContext.Ingredients.FindAsync(getIngredient.IngredientId);
 
-            return ingredient;
+            if(ingredient != null) 
+            {
+                ingredient.IngredientName = entity.IngredientName;
+                ingredient.Amount = entity.IngredientAmount;
+                _dbContext.Ingredients.Update(ingredient);
+                return ingredient;
+            }
+            return null;
         }
 
         public async Task Save()

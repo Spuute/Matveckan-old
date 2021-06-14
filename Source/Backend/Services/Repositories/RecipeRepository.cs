@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using Backend.Models.Data;
 using System.Linq;
 using Backend.Resources;
