@@ -53,9 +53,19 @@ namespace Backend.Services.Repositories
             await Save();
         }
 
-        public Task Update(Ingredient entity, string name)
+        public async Task<IngredientRecipe> Update(Ingredient entity, string name, int id)
         {
-            throw new System.NotImplementedException();
+            var ingredient = await _dbContext.RecipeIngredients
+                   .Include(x => x.Ingredient)
+                   .Include(x => x.Recipe)
+                   .Where(r => r.RecipeId == id)
+                   .Where(x => x.Ingredient.IngredientName == name)
+                   .FirstOrDefaultAsync();
+
+                   ingredient.Ingredient.IngredientName = entity.IngredientName;
+                   ingredient.Ingredient.Amount = entity.Amount;
+
+                   return ingredient;
         }
 
         public async Task Save()
