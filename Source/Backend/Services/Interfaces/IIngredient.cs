@@ -3,7 +3,7 @@ using Backend.Models;
 
 namespace Backend.Interfaces
 {
-        public interface IIngredient
+    public interface IIngredient
     {
         int Id { get; set; }
         string IngredientName { get; set; }
