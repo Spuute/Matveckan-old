@@ -7,5 +7,8 @@ namespace Backend.Models
         public int Id { get; set; }
         public string Step { get; set; }
         public int StepNumber { get; set; }
+
+        public int RecipeId { get; set; }
+        public Recipe Recipe { get; set; }
     }
 }
