@@ -1,3 +1,4 @@
+using System;
 using Backend.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,12 @@ namespace Backend.Controllers
         public InstructionController(FoodWeekContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult InstructionsForRecipe(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
