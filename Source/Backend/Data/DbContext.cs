@@ -8,7 +8,7 @@ namespace Backend.Models.Data
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
         public virtual DbSet<IngredientRecipe> RecipeIngredients { get; set; }
-
+        public virtual DbSet<Instruction> Instructions { get; set; }
         public FoodWeekContext(DbContextOptions<FoodWeekContext> options) : base(options)
         {
 

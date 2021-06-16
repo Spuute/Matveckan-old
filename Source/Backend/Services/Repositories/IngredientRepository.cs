@@ -32,7 +32,7 @@ namespace Backend.Services.Repositories
             Ingredient newIngredient = new Ingredient();
             newIngredient.IngredientName = entity.IngredientName;
             newIngredient.Amount = entity.IngredientAmount;
-             await _dbContext.Ingredients.AddAsync(newIngredient);
+            await _dbContext.Ingredients.AddAsync(newIngredient);
             return newIngredient;
         }
 
@@ -45,7 +45,7 @@ namespace Backend.Services.Repositories
             thisIngredient.IngredientId = ingredientId;
             thisIngredient.RecipeId = id;
 
-            if(!_dbContext.RecipeIngredients.Contains(thisIngredient))
+            if (!_dbContext.RecipeIngredients.Contains(thisIngredient))
             {
                 await _dbContext.RecipeIngredients.AddAsync(thisIngredient);
                 return thisIngredient;
@@ -57,15 +57,20 @@ namespace Backend.Services.Repositories
         public async Task<Ingredient> Update(AddIngredient entity, string name, int id)
         {
             var getIngredient = await _dbContext.RecipeIngredients
-                   .Include(x => x.Ingredient)
-                   .Include(x => x.Recipe)
-                   .Where(r => r.RecipeId == id)
-                   .Where(x => x.Ingredient.IngredientName == name)
-                   .FirstOrDefaultAsync();
+               .Include(x => x.Ingredient)
+               .Include(x => x.Recipe)
+               .Where(r => r.RecipeId == id)
+               .Where(x => x.Ingredient.IngredientName == name)
+               .FirstOrDefaultAsync();
+
+            if (getIngredient == null)
+            {
+                return null;
+            }
 
             var ingredient = await _dbContext.Ingredients.FindAsync(getIngredient.IngredientId);
 
-            if(ingredient != null) 
+            if (ingredient != null)
             {
                 ingredient.IngredientName = entity.IngredientName;
                 ingredient.Amount = entity.IngredientAmount;

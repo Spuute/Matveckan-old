@@ -12,8 +12,7 @@ namespace Backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Weight = table.Column<double>(type: "float", nullable: true),
+                    IngredientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Amount = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -36,24 +35,24 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Instruction",
+                name: "Instructions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Step = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StepNumber = table.Column<int>(type: "int", nullable: false),
-                    RecipeId = table.Column<int>(type: "int", nullable: true)
+                    RecipeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Instruction", x => x.Id);
+                    table.PrimaryKey("PK_Instructions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Instruction_Recipes_RecipeId",
+                        name: "FK_Instructions_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,12 +76,12 @@ namespace Backend.Migrations
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Instruction_RecipeId",
-                table: "Instruction",
+                name: "IX_Instructions_RecipeId",
+                table: "Instructions",
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
@@ -94,7 +93,7 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Instruction");
+                name: "Instructions");
 
             migrationBuilder.DropTable(
                 name: "RecipeIngredients");
