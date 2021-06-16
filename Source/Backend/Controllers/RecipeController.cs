@@ -40,6 +40,11 @@ namespace Backend.Controllers
             return Ok(await _recipeRepository.GetRecipeWithIngredients(id));
         }
 
+        [HttpGet("recipe/{id}")]
+        public async Task<IActionResult> GetCompleteRecipe(int id) {
+            return Ok(await _recipeRepository.GetCompleteRecipe(id));
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddRecipe([FromBody] Recipe recipe) {
             try {

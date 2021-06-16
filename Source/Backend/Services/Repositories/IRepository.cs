@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Backend.DTOs;
 using Backend.Resources;
 
 namespace Backend.Services.Repositories
@@ -12,6 +13,8 @@ namespace Backend.Services.Repositories
         Task Delete(T2 id);
         Task Save();
         Task<RecipeDTO> GetRecipeWithIngredients(T2 id);
+        Task<CompleteRecipeDTO> GetCompleteRecipe(int id);
+
 
     }
 }
