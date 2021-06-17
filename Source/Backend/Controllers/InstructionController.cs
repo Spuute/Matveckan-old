@@ -6,10 +6,10 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class InstructionController : ControllerBase
+    public class InstructionsController : ControllerBase
     {
         private readonly FoodWeekContext _dbContext;
-        public InstructionController(FoodWeekContext dbContext)
+        public InstructionsController(FoodWeekContext dbContext)
         {
             _dbContext = dbContext;
         }
