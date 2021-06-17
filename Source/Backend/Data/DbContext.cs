@@ -27,6 +27,10 @@ namespace Backend.Models.Data
                 .HasOne(ir => ir.Ingredient)
                 .WithMany(i => i.IngredientRecipes)
                 .HasForeignKey(ir => ir.IngredientId);
+
+            // modelBuilder.Entity<Instruction>()
+            //     .HasIndex(i => i.StepNumber)
+            //     .IsUnique();
         }
     }
 }

@@ -1,6 +1,9 @@
-using System;
+using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 using Backend.Models.Data;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Backend.RequestModels;
 
 namespace Backend.Controllers
 {
@@ -14,16 +17,31 @@ namespace Backend.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("for-recipe/Ins{id}")]
+        [HttpGet("for-recipe/{id}")]
         public IActionResult InstructionsForRecipe(int id)
         {
-            throw new NotImplementedException();
+            var test = _dbContext.Recipes
+            .Include(x => x.Instructions)
+            .Where(x => x.Id == id)
+            .Select(i => i.Instructions).ToList();
+
+            return Ok(test);
         }
 
         [HttpPost("to-recipe/{id}")]
-        public IActionResult AddStep()
+        public IActionResult AddStep([FromBody] AddInstructionRequest instruction, int id)
         {
-            throw new NotImplementedException();
+            var test = _dbContext.Recipes
+                        .Include(x => x.Instructions)
+                        .Where(x => x.Id == id).FirstOrDefault();
+
+            var newInstruction = new Instruction();
+            newInstruction.Step = instruction.Step;
+            newInstruction.StepNumber = instruction.StepNumber;
+
+            test.Instructions.Add(newInstruction);
+            _dbContext.SaveChanges();
+            return Ok("Instruktion tillagd till receptet");
         }
     }
 }
