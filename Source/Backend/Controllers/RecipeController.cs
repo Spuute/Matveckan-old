@@ -37,13 +37,13 @@ namespace Backend.Controllers
         //     throw new NotImplementedException();
         // }
 
-        [HttpGet("{id}")]
+        [HttpGet("only-ingredients/{id}")]
         public async Task<IActionResult> GetRecipeById(int id)
         {
             return Ok(await _recipeRepository.GetRecipeWithIngredients(id));
         }
 
-        [HttpGet("recipe/{id}")]
+        [HttpGet("complete-recipe/{id}")]
         public async Task<IActionResult> GetCompleteRecipe(int id)
         {
             return Ok(await _recipeRepository.GetCompleteRecipe(id));
@@ -56,7 +56,7 @@ namespace Backend.Controllers
             {
                 await _recipeRepository.Insert(recipe);
                 await _recipeRepository.Save();
-                return Ok($"{recipe.Name} tillagt i databasen.");
+                return StatusCode(201, $"{recipe.Name} tillagt i databasen.");
             }
             catch
             {

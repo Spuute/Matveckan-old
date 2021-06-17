@@ -23,7 +23,7 @@ namespace Backend.Controllers
             _igredientRepository = igredientRepository;
         }
 
-        [HttpPost("{id}")]
+        [HttpPost("to-recipe/{id}")]
         public async Task<IActionResult> Ingredients(int id, [FromBody] AddIngredient addIngredient)
         {
             var ingredient = await _igredientRepository.Insert(addIngredient);
@@ -40,7 +40,7 @@ namespace Backend.Controllers
         }
 
         //TODO: Add endpoint for updating ingredient if user misspell or some other error. 
-        [HttpPut("{id}/{ingredientName}")]
+        [HttpPut("for-recipe/{id}/{ingredientName}")]
         public async Task<IActionResult> UpdateIngredient(int id, string ingredientName, [FromBody] AddIngredient addIngredient) {
             var ingredient = await _igredientRepository.Update(addIngredient, ingredientName, id);
             

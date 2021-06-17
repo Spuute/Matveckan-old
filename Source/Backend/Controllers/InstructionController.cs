@@ -14,8 +14,14 @@ namespace Backend.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("for-recipe/Ins{id}")]
         public IActionResult InstructionsForRecipe(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost("to-recipe/{id}")]
+        public IActionResult AddStep()
         {
             throw new NotImplementedException();
         }
