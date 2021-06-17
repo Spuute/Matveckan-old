@@ -19,13 +19,15 @@ namespace Backend.Controllers
         private readonly FoodWeekContext _dbContext;
         private readonly IRepository<Recipe, int> _recipeRepository;
 
-        public RecipeController(FoodWeekContext dbContext, IRepository<Recipe, int> recipeRepository) {
+        public RecipeController(FoodWeekContext dbContext, IRepository<Recipe, int> recipeRepository)
+        {
             _dbContext = dbContext;
             _recipeRepository = recipeRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllRecipes(){
+        public async Task<IActionResult> GetAllRecipes()
+        {
             return Ok(await _recipeRepository.GetAll());
         }
 
@@ -36,29 +38,35 @@ namespace Backend.Controllers
         // }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRecipeById(int id) { 
+        public async Task<IActionResult> GetRecipeById(int id)
+        {
             return Ok(await _recipeRepository.GetRecipeWithIngredients(id));
         }
 
         [HttpGet("recipe/{id}")]
-        public async Task<IActionResult> GetCompleteRecipe(int id) {
+        public async Task<IActionResult> GetCompleteRecipe(int id)
+        {
             return Ok(await _recipeRepository.GetCompleteRecipe(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecipe([FromBody] Recipe recipe) {
-            try {
+        public async Task<IActionResult> AddRecipe([FromBody] Recipe recipe)
+        {
+            try
+            {
                 await _recipeRepository.Insert(recipe);
                 await _recipeRepository.Save();
                 return Ok($"{recipe.Name} tillagt i databasen.");
             }
-            catch {
+            catch
+            {
                 return Conflict();
             }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRecipe(int id) {
+        public async Task<IActionResult> DeleteRecipe(int id)
+        {
             await _recipeRepository.Delete(id);
             await _recipeRepository.Save();
             return Ok("Recept borttaget");
