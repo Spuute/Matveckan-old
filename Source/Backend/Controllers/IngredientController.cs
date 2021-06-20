@@ -52,7 +52,7 @@ namespace Backend.Controllers
             return BadRequest("Detta recept har ingen ingrediens med det namnet");
         }
 
-        [HttpDelete("{id}/{ingredientName}")]
+        [HttpDelete("from-recipe/{id}/{ingredientName}")]
         public async Task<IActionResult> Ingredient(int id, string ingredientName)
         {
             var ingredient = _dbContext.Ingredients.Where(x => x.IngredientName == ingredientName).FirstOrDefault();

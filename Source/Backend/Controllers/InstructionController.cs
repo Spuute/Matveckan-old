@@ -17,6 +17,7 @@ namespace Backend.Controllers
             _dbContext = dbContext;
         }
 
+        //TODO: Refactor to Repository
         [HttpGet("for-recipe/{id}")]
         public IActionResult InstructionsForRecipe(int id)
         {
@@ -28,6 +29,7 @@ namespace Backend.Controllers
             return Ok(test);
         }
 
+        //TODO: Refactor to Repository and naming
         [HttpPost("to-recipe/{id}")]
         public IActionResult AddStep([FromBody] AddInstructionRequest instruction, int id)
         {
@@ -39,9 +41,16 @@ namespace Backend.Controllers
             newInstruction.Step = instruction.Step;
             newInstruction.StepNumber = instruction.StepNumber;
 
-            test.Instructions.Add(newInstruction);
-            _dbContext.SaveChanges();
-            return Ok("Instruktion tillagd till receptet");
+            var same = test.Instructions.Where(x => x.StepNumber == newInstruction.StepNumber);
+
+            if (same == null)
+            {
+                test.Instructions.Add(newInstruction);
+                _dbContext.SaveChanges();
+                return Ok("Instruktion tillagd till receptet");
+            }
+
+            return BadRequest("Det finns redan en instruktion med samma nummer på för steg");
         }
     }
 }
