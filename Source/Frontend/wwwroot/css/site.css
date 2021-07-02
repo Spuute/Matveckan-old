@@ -399,3 +399,7 @@ ion-icon .arrow-back-outline {
   top: 0;
   z-index: -1;
 } */
+
+nav:first-child {
+  margin-left: 20px;
+}
