@@ -385,7 +385,11 @@ ion-icon .arrow-back-outline {
   margin-top: 8px;
 }
 
-
+.steps {
+  width: 100%;
+  margin-right: 20px;
+  overflow-y: hidden;
+}
 
 /* .testing:after {
   content: '';
