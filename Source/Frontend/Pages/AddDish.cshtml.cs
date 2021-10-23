@@ -6,6 +6,7 @@ namespace Frontend.Pages
     {
         public void OnGet()
         {
+            
         }
     }
 }
