@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Frontend.Pages
 {
-    public class addModel : PageModel
+    public class ThisWeekModel : PageModel
     {
         public void OnGet()
         {

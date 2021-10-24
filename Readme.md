@@ -24,3 +24,8 @@ eller om du vill köra i detached mode kör
 ```
 docker compose up -d
 ```
+
+## Webapplikation
+
+Jag har börjat med att designa UI för att passa till mobiltelefon då jag från början tänkte mig detta som en mobil applikation, så när applikationen körs bör man i chrome trycka F12 för att öppna inspekteraren, och därefter välja iPhone X som enhet för att se applikationen som den är designad i nuvarande state. 
+
